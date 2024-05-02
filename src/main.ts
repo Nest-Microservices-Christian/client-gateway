@@ -7,7 +7,7 @@ import { envs } from './config';
 async function bootstrap() {
   const logger = new Logger('Main-Gateway');
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new RpcCustomExceptionFilter());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -15,6 +15,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalFilters(new RpcCustomExceptionFilter());
   app.setGlobalPrefix('api');
   await app.listen(envs.port);
 
